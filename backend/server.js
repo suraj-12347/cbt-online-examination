@@ -29,35 +29,17 @@ const app = express();
 // CORS CONFIGURATION
 // =====================================================
 
-const allowedOrigins = [
-  "https://cbt-online-examination-1.onrender.com",
- 
-];
+
+  
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+   origin:[
+    "https://cbt-online-examination-1.onrender.com",
+    
 
-      console.error("Blocked CORS origin:", origin);
-      return callback(new Error("Not allowed by CORS"));
-    },
-    methods: [
-      "GET",
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE",
-      "OPTIONS",
-    ],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-    ],
-    credentials: false,
-    optionsSuccessStatus: 204,
+
+   ]
   })
 );
 
