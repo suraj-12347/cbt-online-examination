@@ -23,22 +23,58 @@ import scheduledExamRoutes from "./routes/scheduledExamRoutes.js";
 
 dotenv.config();
 
-connectDB();
-
 const app = express();
 
 // =====================================================
-// Static Uploads
-// URL: http://localhost:4000/api/uploads/...
+// CORS CONFIGURATION
+// =====================================================
+
+const allowedOrigins = [
+  "https://cbt-online-examination-1.onrender.com",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.error("Blocked CORS origin:", origin);
+      return callback(new Error("Not allowed by CORS"));
+    },
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
+    credentials: false,
+    optionsSuccessStatus: 204,
+  })
+);
+
+// =====================================================
+// BODY PARSERS
+// =====================================================
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// =====================================================
+// STATIC UPLOADS
 // =====================================================
 
 app.use("/api/uploads", express.static("uploads"));
 
-app.use(cors());
-app.use(express.json());
-
 // =====================================================
-// Routes
+// ROUTES
 // =====================================================
 
 app.use("/api/users", userRoutes);
@@ -54,40 +90,59 @@ app.use("/api/systems", systemRoutes);
 app.use("/api/invigilators", invigilatorRoutes);
 
 // =====================================================
-// Health Check
+// HEALTH CHECK
 // =====================================================
 
 app.get("/", (req, res) => {
-  res.json({
+  res.status(200).json({
+    success: true,
     message: "CBT Backend API is running",
   });
 });
 
 // =====================================================
-// Server
+// ERROR HANDLER
+// =====================================================
+
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err.message);
+
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
+});
+
+// =====================================================
+// SERVER START
 // =====================================================
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
 
-// =====================================================
-// AUTO EXAM STATUS CHECK
-//
-// scheduled + startTime reached
-//        ↓
-//     active
-//
-// active + endTime reached
-//        ↓
-//   completed
-// =====================================================
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
 
-  autoUpdateScheduledExams();
+    // Initial scheduled exam status check
+    autoUpdateScheduledExams().catch((error) => {
+      console.error("Scheduled exam update error:", error);
+    });
 
-setInterval(() => {
-  autoUpdateScheduledExams();
-}, 1000);
+    // Check every second
+    setInterval(() => {
+      autoUpdateScheduledExams().catch((error) => {
+        console.error("Scheduled exam update error:", error);
+      });
+    }, 1000);
 
+  } catch (error) {
+    console.error("Server startup failed:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
