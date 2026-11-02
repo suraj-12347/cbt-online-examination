@@ -32,14 +32,15 @@ const app = express();
 
   
 
+const allowedOrigins = [
+  "https://cbt-online-examination-1.onrender.com",
+];
+
 app.use(
   cors({
-   origin:[
-    "https://cbt-online-examination-1.onrender.com",
-    
-
-
-   ]
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
