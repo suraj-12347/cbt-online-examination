@@ -1,0 +1,226 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+
+:root {
+  font-family: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
+
+  /* =================================
+     GLOBAL THEME
+  ================================= */
+
+  /* Primary - Navy Blue */
+  --color-primary: #0b1f3a;
+  --color-primary-hover: #07172c;
+  --color-primary-light: #eef3f9;
+
+  /* Page / Surface */
+  --color-page: #f5f7fa;
+  --color-surface: #ffffff;
+
+  /* Borders */
+  --color-border: #e2e8f0;
+
+  /* Typography */
+  --color-heading: #0f172a;
+  --color-text: #334155;
+  --color-muted: #64748b;
+  --color-placeholder: #94a3b8;
+
+  /* =================================
+     STATUS COLORS
+  ================================= */
+
+  /* Success */
+  --color-success: #16a34a;
+  --color-success-light: #f0fdf4;
+  --color-success-border: #bbf7d0;
+
+  /* Warning */
+  --color-warning: #d97706;
+  --color-warning-light: #fffbeb;
+  --color-warning-border: #fde68a;
+
+  /* Danger */
+  --color-danger: #dc2626;
+  --color-danger-light: #fef2f2;
+  --color-danger-border: #fecaca;
+
+  /* Info */
+  --color-info: #2563eb;
+  --color-info-light: #eff6ff;
+  --color-info-border: #bfdbfe;
+
+  /* =================================
+     SIDEBAR
+  ================================= */
+
+  --sidebar-bg: var(--color-primary);
+  --sidebar-primary: var(--color-primary);
+
+  --sidebar-text: #ffffff;
+  --sidebar-text-muted: rgba(255, 255, 255, 0.72);
+  --sidebar-muted: rgba(255, 255, 255, 0.45);
+
+  --sidebar-border: rgba(255, 255, 255, 0.10);
+
+  --sidebar-hover: rgba(255, 255, 255, 0.08);
+
+  /* Active Navigation */
+  --sidebar-active-bg: #ffffff;
+  --sidebar-active-text: var(--color-primary);
+
+  /* Logo */
+  --sidebar-logo-bg: #ffffff;
+
+  /* Profile */
+  --sidebar-profile-bg: rgba(255, 255, 255, 0.06);
+  --sidebar-avatar-bg: #173b68;
+  --sidebar-avatar-border: rgba(255, 255, 255, 0.15);
+
+  /* Tooltip */
+  --sidebar-tooltip-bg: var(--color-primary-hover);
+  --sidebar-tooltip-text: #ffffff;
+
+  /* Mobile Overlay */
+  --sidebar-overlay: rgba(3, 12, 27, 0.55);
+
+  /* =================================
+     GLOBAL
+  ================================= */
+
+  color: var(--color-heading);
+  background: var(--color-page);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =================================
+   BOX SIZING
+================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+/* =================================
+   HTML
+================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* =================================
+   BODY
+================================= */
+
+body {
+  margin: 0;
+
+  min-width: 320px;
+  min-height: 100vh;
+
+  background: var(--color-page);
+  color: var(--color-text);
+}
+
+/* =================================
+   FORM ELEMENTS
+================================= */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =================================
+   TEXT SELECTION
+================================= */
+
+::selection {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+/* =================================
+   SCROLLBAR
+================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =================================
+   HIDDEN SCROLLBAR
+================================= */
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* =================================
+   NUMBER INPUT
+================================= */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* =================================
+   FOCUS
+================================= */
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* =================================
+   CUSTOM FOCUS RING
+================================= */
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

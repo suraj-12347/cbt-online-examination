@@ -1,0 +1,1788 @@
+                    
+                    System ka High-Level Workflow
+                    ┌──────────────────┐
+                    │   ADMIN PANEL    │
+                    └────────┬─────────┘
+                             │
+                    Create Examination
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │      EXAM        │
+                    │  Configuration   │
+                    └────────┬─────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+          Sections       Questions       Candidates
+              │              │              │
+              └──────────────┼──────────────┘
+                             ▼
+                    ┌──────────────────┐
+                    │ CANDIDATE LOGIN  │
+                    └────────┬─────────┘
+                             ▼
+                    ┌──────────────────┐
+                    │ System Check /   │
+                    │ Instructions     │
+                    └────────┬─────────┘
+                             ▼
+                    ┌──────────────────┐
+                    │   START EXAM     │
+                    └────────┬─────────┘
+                             ▼
+              ┌────────────────────────────┐
+              │       EXAM ENGINE          │
+              │                            │
+              │ Section → Question → Answer│
+              │ Timer → Navigation         │
+              │ Auto Save → Review         │
+              └─────────────┬──────────────┘
+                            ▼
+                    ┌──────────────────┐
+                    │    SUBMIT EXAM   │
+                    └────────┬─────────┘
+                             ▼
+                    ┌──────────────────┐
+                    │   EVALUATION     │
+                    └────────┬─────────┘
+                             ▼
+                    ┌──────────────────┐
+                    │ RESULT / SCORE   │
+                    └────────┬─────────┘
+                             ▼
+                    ┌──────────────────┐
+                    │    ANALYTICS     │
+                    └──────────────────┘
+
+
+2. Admin Side ka Workflow
+
+*/admin/login
+*Login ke baad dashboard:
+Dashboard
+│
+├── Exams
+├── Sections
+├── Questions
+├── Candidates
+├── Exam Centers
+├── Results
+├── Reports
+└── Settings
+
+*. Exam Create Karna
+Exam Name:
+SSC Mock Test 01
+
+Duration:
+60 Minutes
+
+Total Questions:
+50
+
+Total Marks:
+100
+
+Negative Marking:
+0.50
+
+Status: 
+Draft
+
+[yahan important settings hongi:
+
+Exam duration
+Total marks
+Passing marks
+Negative marking
+Start date
+End date
+Random question
+Random options
+Section navigation
+Result visibility]
+
+* Section Creation
+
+SSC Mock Test 01
+
+├── General Intelligence
+│   ├── 20 Questions
+│   └── 40 Marks
+│
+├── English
+│   ├── 10 Questions
+│   └── 20 Marks
+│
+├── Quantitative Aptitude
+│   ├── 10 Questions
+│   └── 20 Marks
+│
+└── General Awareness
+    ├── 10 Questions
+    └── 20 Marks
+
+Admin decide kar sakta hai:
+
+[Section Name
+Question Count
+Marks per Question
+Negative Marks
+Section Time
+Can Go Back?
+Can Change Section?]
+
+*5. Questions Add Karna
+
+Admin question create karega:
+
+[ Section:
+Quantitative Aptitude
+
+Question:
+If 5x = 25, then x = ?
+
+Option A:
+2
+
+Option B:
+5
+
+Option C:
+10
+
+Option D:
+15
+
+Correct Answer:
+B
+
+Marks:
+2
+
+Negative:
+0.5]  
+
+{
+MCQ
+○ A
+○ B
+○ C
+○ D
+Multiple Correct
+☐ A
+☐ B
+☐ C
+☐ D
+Numerical Answer
+Enter Answer: ______}
+
+*  7. Candidate Management
+
+Admin candidates add/import karega.
+
+Example:
+
+Candidate ID     Name             Exam
+------------------------------------------------
+CAND001          Rahul Sharma     SSC Mock 01
+CAND002          Amit Singh       SSC Mock 01
+CAND003          Neha Sharma      SSC Mock 01
+
+Candidate ko login credentials mil sakte hain:
+
+Candidate ID: CAND001
+Password: ******
+
+*  8. Candidate Login
+
+Candidate exam portal open karega:
+
+/exam/login
+
+Enter:
+
+Candidate ID
+Password
+
+Login successful:
+
+Welcome Rahul Sharma
+
+Exam:
+SSC Mock Test 01
+
+Duration:
+60 Minutes
+
+[Start Exam]
+
+
+* System Check
+
+Real CBT system me exam start hone se pehle basic checks useful hote hain.
+
+System Check
+
+
+*   10. Instructions Screen
+
+Candidate ko instructions milengi.
+
+Example:
+
+GENERAL INSTRUCTIONS
+
+1. Exam duration is 60 minutes.
+2. Each question carries 2 marks.
+3. 0.5 marks will be deducted for wrong answers.
+4. You can mark questions for review.
+5. Answers are automatically saved.
+
+[ I Agree & Continue ]
+
+*   11. Exam Start
+
+Ab actual exam engine start hoga.
+
+Screen roughly:
+
+┌─────────────────────────────────────────────────────────┐
+│ SSC MOCK TEST                         Time: 58:42       │
+├─────────────────────────────────────────────────────────┤
+│ Reasoning │ English │ Maths │ GK                        │
+├───────────────────────────────────┬─────────────────────┤
+│                                   │ Question Palette    │
+│ Question 1                        │                     │
+│                                   │ 1  2  3  4  5       │
+│ What comes next?                  │ 6  7  8  9 10       │
+│                                   │ 11 12 13 14 15      │
+│ ○ 12                              │                     │
+│ ○ 14                              │ Legend:             │
+│ ○ 16                              │ Answered            │
+│ ○ 18                              │ Not Answered        │
+│                                   │ Marked               │
+│                                   │ Not Visited         │
+├───────────────────────────────────┴─────────────────────┤
+│ Mark for Review | Clear | Previous | Save & Next        │
+└─────────────────────────────────────────────────────────┘
+
+
+*  12. Question Palette ka Logic
+
+Ye TCS-type exam ka important feature hai.
+
+Question ki states:
+
+Grey
+
+Not Visited
+
+1
+Red
+
+Not Answered
+
+Candidate question par gaya but answer nahi diya.
+
+Green
+
+Answered
+
+Answer select kar diya.
+
+Purple/Marked
+
+Marked for Review
+
+Candidate baad me question dekhna chahta hai.
+
+Green + Mark
+
+Answered + Review.
+
+Example:
+
+Question Palette
+
+1  2  3  4  5
+G  R  G  P  G
+
+G = Answered
+R = Not Answered
+P = Marked
+13. Answer Save ka Workflow
+
+
+*  Answer Save ka Workflow
+Ye bahut important hai.
+
+Candidate:
+
+Question 10
+     ↓
+Option B select
+     ↓
+Save & Next
+     ↓
+Backend
+     ↓
+Answer database me save
+
+Database:
+
+attempt_answers
+
+id
+attempt_id
+question_id
+selected_option
+is_marked
+answered_at
+
+Isse browser refresh hone par bhi answer recover kiya ja sakta hai.
+
+*  Auto Save
+
+Main recommend karunga ki answer sirf Save & Next par hi save na ho.
+
+Option select karte hi:
+
+User selects B
+      ↓
+Frontend state update
+      ↓
+API request
+      ↓
+Database update
+
+Aur periodic autosave:
+
+Every 5–10 seconds
+        ↓
+Save exam state
+
+Isse internet/browser issue me data loss ka risk kam hoga.
+
+*  15. Section Switching
+
+Example:
+
+Reasoning
+English
+Math
+GK
+
+Agar exam me section lock hai:
+
+Reasoning
+   ↓
+Time समाप्त
+   ↓
+English automatically
+
+*  16. Section-wise Timer
+
+Ye feature bhi rakha ja sakta hai.
+
+Example:
+
+Reasoning
+20 Minutes
+
+English
+15 Minutes
+
+Math
+25 Minutes
+
+Ya alternatively single overall timer:
+
+Total: 60 Minutes
+
+
+*  . Submit Exam
+
+Candidate jab Submit press karega:
+
+Are you sure?
+
+Answered: 47
+Not Answered: 3
+Marked: 5
+
+[Cancel] [Submit Exam]
+
+Submit ke baad:
+
+Exam Submitted Successfully
+
+Aur candidate exam screen par wapas nahi ja sakega.
+
+* 20. Auto Submit
+
+Agar timer:
+
+00:00
+
+ho gaya:
+
+Timer End
+   ↓
+All answers saved
+   ↓
+Exam automatically submitted
+   ↓
+Evaluation
+
+Candidate ko submit button dabane ki जरूरत नहीं होगी.  
+
+*   21. Evaluation Engine
+
+Submit ke baad backend answers check karega.
+
+Example:
+
+Question 1
+Correct = B
+Candidate = B
+
+→ +2
+
+Wrong:
+
+Correct = B
+Candidate = C
+
+→ -0.5
+
+Unanswered:
+
+Candidate = NULL
+
+→ 0
+
+Formula:
+
+Score =
+Correct Marks
+-
+Wrong Answers × Negative Marks
+
+
+*  22. Section-wise Result
+
+Example:
+
+Section	Correct	Wrong	Unattempted	Score
+Reasoning	16	3	1	30.5
+English	14	4	2	24
+Maths	15	3	2	28.5
+GK	12	6	2	21
+
+Total = 104
+
+23. Candidate Result
+
+Candidate ko:
+
+EXAM RESULT
+
+Candidate:
+Rahul Sharma
+
+Total Questions: 50
+
+Attempted: 47
+Correct: 42
+Wrong: 5
+
+Total Marks: 100
+Obtained Marks: 84.5
+
+Accuracy: 89.36%
+
+Time Taken: 52:14
+
+dikhaya ja sakta hai.  
+
+
+*  26. Backend ka Actual Workflow
+
+Aapke Node.js + Express backend me roughly:
+
+React Frontend
+      ↓
+Express API
+      ↓
+Authentication
+      ↓
+Exam Service
+      ↓
+Question Service
+      ↓
+Answer Service
+      ↓
+Evaluation Service
+      ↓
+MySQL
+
+Example APIs:
+
+POST /api/auth/login
+
+GET  /api/exams/:id
+
+GET  /api/exams/:id/sections
+
+GET  /api/sections/:id/questions
+
+POST /api/attempts/start
+
+POST /api/answers/save
+
+POST /api/answers/mark-review
+
+GET  /api/attempts/:id/status
+
+POST /api/attempts/:id/submit
+
+GET  /api/results/:attemptId
+27. Database ka Structure
+
+Main system ko roughly is tarah design karunga:
+
+users
+  │
+  └── candidates
+
+exams
+  │
+  ├── sections
+  │      │
+  │      └── questions
+  │             │
+  │             └── options
+  │
+  └── exam_candidates
+             │
+             └── attempts
+                    │
+                    └── answers
+
+Important tables:
+
+users
+exams
+sections
+questions
+options
+exam_questions
+exam_candidates
+attempts
+answers
+results
+28. Security Workflow
+
+Exam software me security bahut important hai.
+
+Frontend par sirf correct answer nahi bhejna chahiye.
+
+❌ Galat approach:
+
+React ko question + correct_answer bhej diya
+
+Kyuki candidate browser DevTools se correct answer dekh sakta hai.
+
+✅ Better:
+
+React
+  ↓
+Question + Options
+  ↓
+Candidate Answer
+  ↓
+Backend
+  ↓
+Correct Answer Check
+  ↓
+Score
+
+Correct answers evaluation tak server-side rahenge.
+
+29. Internet Disconnect Handling
+
+Ye feature main strongly recommend karunga.
+
+Example:
+
+Internet Connected
+       ↓
+Answer Save
+       ↓
+Internet Disconnect
+       ↓
+Answer Local Storage/IndexedDB
+       ↓
+Internet Reconnect
+       ↓
+Pending Answers Sync
+       ↓
+Server
+
+Isse temporary internet problem me candidate ka exam immediately destroy nahi hoga.
+
+30. Final Complete Architecture
+
+Aapka पूरा software ultimately:
+
+                  ADMIN
+                    │
+                    ▼
+              Admin Dashboard
+                    │
+          ┌─────────┼─────────┐
+          ▼         ▼         ▼
+       Exams     Questions  Candidates
+          │         │
+          ▼         ▼
+       Sections  Question Bank
+          │
+          └───────┬───────────┘
+                  ▼
+             EXAM PUBLISH
+                  │
+                  ▼
+             CANDIDATE
+                  │
+                  ▼
+                LOGIN
+                  │
+                  ▼
+            SYSTEM CHECK
+                  │
+                  ▼
+             INSTRUCTIONS
+                  │
+                  ▼
+              START EXAM
+                  │
+                  ▼
+        ┌──────────────────────┐
+        │      EXAM ENGINE     │
+        │                      │
+        │ Section              │
+        │ Questions            │
+        │ Timer                │
+        │ Answer Save          │
+        │ Auto Save            │
+        │ Navigation           │
+        │ Mark Review          │
+        └──────────┬───────────┘
+                   │
+            Submit / Timeout
+                   │
+                   ▼
+              EVALUATION
+                   │
+                   ▼
+                RESULT
+                   │
+          ┌────────┴────────┐
+          ▼                 ▼
+      Candidate           Admin
+       Result            Analytics
+
+
+*******************
+
+
+Mere hisab se aapko ise 3 major phases me banana chahiye:
+
+Phase 1 — Core Exam System
+
+Login → Exam → Sections → Questions → Timer → Answer Save → Submit → Result
+
+Phase 2 — Admin System
+
+Exam creation → Section management → Question bank → Candidate management → Reports
+
+Phase 3 — TCS-level features
+
+Randomization → Auto-save → Offline recovery → Full-screen monitoring → Proctoring → Detailed analytics → Audit logs         
+
+***********************
+
+
+
+database ka exact ER diagram + saari MySQL tables + unke relationships design karna sahi rahega.
+
+
+
+
+
+
+*  1. Complete ER Diagram
+┌──────────────────┐
+│      users       │
+├──────────────────┤
+│ PK id            │
+│ name             │
+│ email            │
+│ password         │
+│ role             │
+│ status           │
+└────────┬─────────┘
+         │
+         │ 1:N
+         ▼
+┌──────────────────┐
+│  exam_candidates │
+├──────────────────┤
+│ PK id            │
+│ FK exam_id       │
+│ FK user_id       │
+│ candidate_code   │
+│ assigned_at      │
+└────────┬─────────┘
+         │
+         │ 1:N
+         ▼
+┌──────────────────┐
+│     attempts     │
+├──────────────────┤
+│ PK id            │
+│ FK exam_id       │
+│ FK user_id       │
+│ started_at       │
+│ submitted_at     │
+│ status           │
+│ current_section  │
+│ current_question │
+└────────┬─────────┘
+         │
+         │ 1:N
+         ▼
+┌──────────────────┐
+│     answers      │
+├──────────────────┤
+│ PK id            │
+│ FK attempt_id    │
+│ FK question_id   │
+│ selected_option  │
+│ answer_text      │
+│ is_marked        │
+│ answered_at      │
+└────────┬─────────┘
+         │
+         │ N:1
+         ▼
+┌──────────────────┐
+│    questions     │
+├──────────────────┤
+│ PK id            │
+│ FK section_id    │
+│ question_text   │
+│ question_type    │
+│ marks            │
+│ negative_marks   │
+│ difficulty       │
+│ status           │
+└────────┬─────────┘
+         │
+         │ 1:N
+         ▼
+┌──────────────────┐
+│     options      │
+├──────────────────┤
+│ PK id            │
+│ FK question_id   │
+│ option_label     │
+│ option_text      │
+│ is_correct       │
+└──────────────────┘
+
+
+┌──────────────────┐
+│      exams       │
+├──────────────────┤
+│ PK id            │
+│ name             │
+│ duration_minutes │
+│ total_marks      │
+│ negative_marking │
+│ status           │
+└────────┬─────────┘
+         │
+         │ 1:N
+         ▼
+┌──────────────────┐
+│     sections     │
+├──────────────────┤
+│ PK id            │
+│ FK exam_id       │
+│ name             │
+│ display_order    │
+│ duration_minutes │
+│ question_count   │
+└────────┬─────────┘
+         │
+         │ 1:N
+         ▼
+      questions 
+
+*  2. Tables ka Complete Structure
+
+1. users
+
+Admin, examiner aur candidate ke login ke liye.
+
+CREATE TABLE users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) UNIQUE,
+    phone VARCHAR(20),
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin','examiner','candidate') NOT NULL DEFAULT 'candidate',
+    status ENUM('active','inactive','blocked') NOT NULL DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+); 
+
+*  3. exams
+
+Har examination ka master record.  
+
+CREATE TABLE exams (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+
+    duration_minutes INT NOT NULL,
+
+    total_questions INT DEFAULT 0,
+    total_marks DECIMAL(10,2) DEFAULT 0,
+    passing_marks DECIMAL(10,2) DEFAULT 0,
+
+    negative_marking_enabled BOOLEAN DEFAULT FALSE,
+    default_negative_marks DECIMAL(10,2) DEFAULT 0,
+
+    navigation_type ENUM(
+        'free',
+        'section_locked',
+        'linear'
+    ) DEFAULT 'free',
+
+    result_visibility ENUM(
+        'immediate',
+        'after_exam',
+        'hidden'
+    ) DEFAULT 'immediate',
+
+    status ENUM(
+        'draft',
+        'published',
+        'started',
+        'completed',
+        'archived'
+    ) DEFAULT 'draft',
+
+    start_at DATETIME NULL,
+    end_at DATETIME NULL,
+
+    created_by BIGINT UNSIGNED NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_exams_created_by
+        FOREIGN KEY (created_by)
+        REFERENCES users(id)
+        ON DELETE RESTRICT
+);  
+
+ SSC Mock Test
+│
+├── Reasoning
+├── English
+├── Mathematics
+└── General Awareness
+
+CREATE TABLE sections (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    exam_id BIGINT UNSIGNED NOT NULL,
+
+    name VARCHAR(150) NOT NULL,
+    description TEXT,
+
+    display_order INT NOT NULL DEFAULT 1,
+
+    question_count INT DEFAULT 0,
+
+    duration_minutes INT NULL,
+
+    marks_per_question DECIMAL(10,2) DEFAULT 1,
+    negative_marks DECIMAL(10,2) DEFAULT 0,
+
+    is_optional BOOLEAN DEFAULT FALSE,
+    is_locked BOOLEAN DEFAULT FALSE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_sections_exam
+        FOREIGN KEY (exam_id)
+        REFERENCES exams(id)
+        ON DELETE CASCADE
+);
+
+
+5. questions
+
+Question bank का main table.
+
+CREATE TABLE questions (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    section_id BIGINT UNSIGNED NOT NULL,
+
+    question_text LONGTEXT NOT NULL,
+
+    question_type ENUM(
+        'single_choice',
+        'multiple_choice',
+        'numerical',
+        'true_false'
+    ) DEFAULT 'single_choice',
+
+    difficulty ENUM(
+        'easy',
+        'medium',
+        'hard'
+    ) DEFAULT 'medium',
+
+    marks DECIMAL(10,2) DEFAULT 1,
+    negative_marks DECIMAL(10,2) DEFAULT 0,
+
+    explanation TEXT,
+
+    language VARCHAR(20) DEFAULT 'en',
+
+    status ENUM(
+        'active',
+        'inactive'
+    ) DEFAULT 'active',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_questions_section
+        FOREIGN KEY (section_id)
+        REFERENCES sections(id)
+        ON DELETE CASCADE
+); 
+
+
+6. options
+
+Question के A/B/C/D options.
+
+CREATE TABLE options (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    question_id BIGINT UNSIGNED NOT NULL,
+
+    option_label VARCHAR(10) NOT NULL,
+    option_text LONGTEXT NOT NULL,
+
+    is_correct BOOLEAN DEFAULT FALSE,
+
+    display_order INT DEFAULT 1,
+
+    CONSTRAINT fk_options_question
+        FOREIGN KEY (question_id)
+        REFERENCES questions(id)
+        ON DELETE CASCADE
+);
+
+
+11. results
+
+Final result अलग table में रखना बेहतर है।
+
+CREATE TABLE results (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    attempt_id BIGINT UNSIGNED NOT NULL,
+    exam_id BIGINT UNSIGNED NOT NULL,
+    user_id BIGINT UNSIGNED NOT NULL,
+
+    total_questions INT DEFAULT 0,
+    attempted_questions INT DEFAULT 0,
+
+    correct_answers INT DEFAULT 0,
+    wrong_answers INT DEFAULT 0,
+    unanswered_questions INT DEFAULT 0,
+
+    total_marks DECIMAL(10,2) DEFAULT 0,
+    obtained_marks DECIMAL(10,2) DEFAULT 0,
+
+    percentage DECIMAL(6,2) DEFAULT 0,
+    accuracy DECIMAL(6,2) DEFAULT 0,
+
+    time_taken_seconds INT DEFAULT 0,
+
+    result_status ENUM(
+        'pass',
+        'fail',
+        'pending'
+    ) DEFAULT 'pending',
+
+    generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE KEY uq_result_attempt (
+        attempt_id
+    ),
+
+    CONSTRAINT fk_result_attempt
+        FOREIGN KEY (attempt_id)
+        REFERENCES attempts(id),
+
+    CONSTRAINT fk_result_exam
+        FOREIGN KEY (exam_id)
+        REFERENCES exams(id),
+
+    CONSTRAINT fk_result_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+);  
+
+12. Section-wise Result
+
+TCS-style analytics के लिए यह table बहुत useful रहेगा।
+
+CREATE TABLE result_sections (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    result_id BIGINT UNSIGNED NOT NULL,
+    section_id BIGINT UNSIGNED NOT NULL,
+
+    total_questions INT DEFAULT 0,
+    attempted_questions INT DEFAULT 0,
+
+    correct_answers INT DEFAULT 0,
+    wrong_answers INT DEFAULT 0,
+    unanswered_questions INT DEFAULT 0,
+
+    total_marks DECIMAL(10,2) DEFAULT 0,
+    obtained_marks DECIMAL(10,2) DEFAULT 0,
+
+    accuracy DECIMAL(6,2) DEFAULT 0,
+
+    CONSTRAINT fk_rs_result
+        FOREIGN KEY (result_id)
+        REFERENCES results(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_rs_section
+        FOREIGN KEY (section_id)
+        REFERENCES sections(id)
+        ON DELETE CASCADE
+);
+  
+
+16. एक Candidate के Exam का पूरा Database Flow
+
+मान लीजिए:
+
+Rahul → SSC Mock Test 01 
+
+users
+  ↓
+Rahul
+
+exam_candidates
+  ↓
+Rahul assigned to SSC Mock Test 01
+
+attempts
+  ↓
+Rahul started exam
+
+sections
+  ↓
+Reasoning
+English
+Math
+GK
+
+exam_questions
+  ↓
+Exam के लिए selected questions
+
+questions
+  ↓
+Actual questions
+
+options
+  ↓
+A / B / C / D
+
+answers
+  ↓
+Rahul ने क्या चुना
+
+results
+  ↓
+Final score
+
+result_sections
+  ↓
+Section-wise score
+
+exam_logs
+  ↓
+पूरे exam में Rahul ने क्या-क्या किया             Shubham,nitesh,girraj cash cunter  
+
+
+************************************************ my project***********************************************
+
+src/
+├── components/
+│   ├── exam/
+│   │   ├── ExamHeader.jsx
+│   │   ├── SectionSidebar.jsx
+│   │   ├── QuestionPanel.jsx
+│   │   ├── QuestionOptions.jsx
+│   │   ├── QuestionPalette.jsx
+│   │   ├── SectionSummary.jsx
+│   │   └── ExamNavigation.jsx
+│   │
+│   └── common/
+│       └── Timer.jsx
+│
+├── pages/
+│   └── ExamPage.jsx
+│
+├── data/
+│   └── examData.js
+│
+├── App.jsx
+├── main.jsx
+└── index.css
+
+
+
+******************************************
+
+image rakhne ke liye 
+public/
+└── images/
+    └── questions/
+        ├── q1.png
+        ├── q2.png
+        ├── option-a.png
+        └── option-b.png
+********************************************************************************************************
+
+Student Login
+     ↓
+Exam Instructions
+     ↓
+Start Exam
+     ↓
+Exam Page
+     ↓
+Student answers questions
+     ↓
+Submit Exam
+     ↓
+Result Calculation
+     ↓
+Result Page
+
+
+*******************************************************************************************************
+1. Result me kya-kya dikhana chahiye?
+
+TCS-style system me result page kuchh is type ka ho sakta hai:
+
+┌──────────────────────────────────────────────────────┐
+│              EXAM RESULT                             │
+│        Campus Recruitment - Online Assessment         │
+├──────────────────────────────────────────────────────┤
+│                                                      │
+│              Congratulations!                       │
+│                                                      │
+│                    72 / 100                           │
+│                    72%                                │
+│                                                      │
+│              Status: QUALIFIED                        │
+│                                                      │
+├──────────────────────────────────────────────────────┤
+│  Total Questions        42                            │
+│  Attempted              35                            │
+│  Correct                30                            │
+│  Incorrect               5                            │
+│  Not Attempted           7                            │
+│                                                      │
+├──────────────────────────────────────────────────────┤
+│ Section-wise Performance                             │
+│                                                      │
+│ Numerical Ability       16 / 20                      │
+│ ████████████████░░░░                                  │
+│                                                      │
+│ Verbal Ability          14 / 20                      │
+│ ██████████████░░░░░░                                  │
+│                                                      │
+│ Reasoning Ability       15 / 20                      │
+│ ███████████████░░░░░                                  │
+│                                                      │
+│ Programming Logic       17 / 20                      │
+│ █████████████████░░░                                  │
+│                                                      │
+├──────────────────────────────────────────────────────┤
+│              View Answer Summary                     │
+│              Back to Dashboard                       │
+└──────────────────────────────────────────────────────┘
+
+
+
+
+
+***********************************BACKEND*************************************************************
+1. Overall architecture
+React + Tailwind
+      ↓
+   REST API
+      ↓
+Node.js + Express
+      ↓
+   MongoDB
+
+Tumhara existing frontend rahega. Backend mainly ye kaam karega:
+
+Student
+  ↓
+Login / Registration
+  ↓
+Exam List
+  ↓
+Start Exam
+  ↓
+Section-wise Questions
+  ↓
+Save Answers
+  ↓
+Timer / Section Control
+  ↓
+Submit Exam
+  ↓
+Automatic Evaluation
+  ↓
+Result
+  ↓
+Admin Dashboard
+2. Backend me kya-kya banana padega?
+
+Main backend ko roughly 8 modules me divide karunga:
+
+Module	Kaam
+Authentication	Student/Admin login
+Users	Candidate information
+Exams	Exam create/manage
+Sections	Numerical, Verbal, Reasoning etc.
+Questions	MCQ + Coding questions
+Exam Attempts	Student ka running exam
+Answers	Student ke selected answers
+Results	Score, correct, wrong, skipped
+Admin	Questions/exams/results manage
+3. MongoDB Collections
+
+Tumhare CBT ke liye main ye collections rakhunga:
+
+users
+exams
+sections
+questions
+attempts
+answers
+results
+users
+_id
+name
+email
+password
+role
+createdAt
+
+role:
+
+student
+admin
+exams
+_id
+title
+description
+duration
+totalMarks
+negativeMarking
+status
+createdAt
+
+Example:
+
+Campus Recruitment - Online Assessment
+sections
+_id
+examId
+name
+shortName
+totalQuestions
+duration
+order
+
+Tumhare current sections:
+
+Numerical Ability
+Verbal Ability
+Reasoning Ability
+Programming Logic
+Advanced Coding
+questions
+_id
+examId
+sectionId
+question
+type
+options
+correctAnswer
+marks
+negativeMarks
+questionImage
+imageAlt
+
+MCQ:
+
+options: [
+  {
+    text: "Option A",
+    image: ""
+  },
+  {
+    text: "Option B",
+    image: ""
+  }
+]
+
+Coding question ke liye:
+
+type: "coding"
+options: []
+correctAnswer
+4. Sabse important collection — attempts
+
+Ye actual CBT ka running exam session manage karega.
+
+_id
+userId
+examId
+currentSection
+currentQuestion
+startedAt
+sectionStartedAt
+sectionEndsAt
+status
+submittedAt
+
+status:
+
+started
+completed
+expired
+
+Isse server ko pata rahega ki candidate ka exam kaha tak pahucha hai.
+
+5. Answers
+
+Har question ka answer alag save kar sakte hain:
+
+_id
+attemptId
+questionId
+selectedAnswer
+isMarkedForReview
+answeredAt
+
+Example:
+
+questionId: q123
+selectedAnswer: 2
+isMarkedForReview: true
+
+Tumhare frontend me abhi A/B/C/D ka index use ho raha hai:
+
+A = 0
+B = 1
+C = 2
+D = 3
+
+To backend me bhi initially same rakh sakte hain.
+
+6. Result
+
+Exam submit hone ke baad:
+
+results
+
+me:
+
+_id
+attemptId
+userId
+examId
+
+totalQuestions
+attempted
+correct
+wrong
+skipped
+
+positiveMarks
+negativeMarks
+totalMarks
+
+percentage
+createdAt
+
+Example:
+
+Total Questions : 42
+Attempted       : 35
+Correct         : 28
+Wrong           : 7
+Skipped         : 7
+
+Positive Marks  : 32
+Negative Marks  : 1.75
+Final Score     : 30.25
+7. Backend folder structure
+
+Main tumhare project ke liye ye structure rakhunga:
+
+backend/
+├── controllers/
+│   ├── answerController.js
+│   ├── attemptController.js
+│   ├── examController.js
+│   ├── questionController.js
+│   ├── resultController.js
+│   ├── sectionController.js
+│   └── userController.js
+│
+├── models/
+│   ├── answerModel.js
+│   ├── attemptModel.js
+│   ├── examModel.js
+│   ├── questionModel.js
+│   ├── resultModel.js
+│   ├── sectionModel.js
+│   └── userModel.js
+│
+├── routes/
+│   ├── answerRoutes.js       ← YE HONA CHAHIYE
+│   ├── attemptRoutes.js
+│   ├── examRoutes.js
+│   ├── questionRoutes.js
+│   ├── resultRoutes.js
+│   ├── sectionRoutes.js
+│   └── userRoutes.js
+│
+├── utils/
+│   └── calculateResult.js
+│
+├── .env
+├── server.js
+├── package.json
+└── README.md
+
+
+8. APIs bhi banengi
+
+Example:
+
+POST   /api/auth/register
+POST   /api/auth/login
+
+GET    /api/exams
+GET    /api/exams/:id
+
+GET    /api/exams/:id/sections
+GET    /api/sections/:id/questions
+
+POST   /api/attempts/start
+GET    /api/attempts/:id
+
+POST   /api/attempts/:id/answer
+POST   /api/attempts/:id/mark-review
+
+POST   /api/attempts/:id/submit
+
+GET    /api/results/:attemptId
+
+Admin ke liye:
+
+POST   /api/admin/exams
+PUT    /api/admin/exams/:id
+DELETE /api/admin/exams/:id
+
+POST   /api/admin/questions
+PUT    /api/admin/questions/:id
+DELETE /api/admin/questions/:id
+
+GET    /api/admin/results
+GET    /api/admin/candidates
+9. Ek important baat — Timer
+
+Tumhare CBT me section-wise strict timer hai, isliye timer sirf React frontend par depend nahi karna chahiye.
+
+Frontend:
+
+Timer → UI me countdown
+
+Backend:
+
+sectionStartedAt
+sectionEndsAt
+
+Server par maintain karega.
+
+Example:
+
+Numerical
+10 questions
+1 minute
+
+Start: 10:00:00
+End:   10:01:00
+
+Agar candidate browser refresh kare, tab bhi backend ko pata rahega ki section kab expire hona tha.
+
+10. Hum ise kaise banayenge?
+
+Main suggest karunga hum phased development karein:
+
+Phase 1 — Backend setup
+Node.js
+Express
+MongoDB
+Mongoose
+dotenv
+cors
+
+↓
+
+Phase 2 — Database Models
+User
+Exam
+Section
+Question
+Attempt
+Answer
+Result
+
+↓
+
+Phase 3 — Admin APIs
+Create Exam
+Create Section
+Create Question
+Update Question
+Delete Question
+
+↓
+
+Phase 4 — Student APIs
+Login
+Exam list
+Start exam
+Get questions
+Save answer
+Mark review
+
+↓
+
+Phase 5 — CBT Engine
+Section timer
+Auto section switch
+Answer persistence
+Exam expiry
+Submit
+
+↓
+
+Phase 6 — Result Engine
+Correct
+Wrong
+Skipped
+Positive marks
+Negative marks
+Final score
+Percentage
+
+↓
+
+Phase 7 — React integration
+
+Tumhare existing:
+
+ExamPage.jsx
+QuestionPanel.jsx
+QuestionOptions.jsx
+Timer.jsx
+ResultPage.jsx
+
+ko APIs se connect karenge.
+
+
+************************* admin panel *********************************
+
+CBT Admin
+Management Panel
+──────────────────
+▣ Dashboard
+▤ Exams
+▱ Sections
+?  Questions
+♙ Students
+▣ Attempts
+▥ Results
+
+──────────────────
+⚙ Settings
+↪ Logout
+
+
+ADMIN
+  ↓
+Create Exam
+  ↓
+Create Sections + Questions
+  ↓
+Set Exam Date & Time
+  ↓
+Allocate Exam to Students
+  ↓
+Student Attendance / Verification
+  ↓
+SYSTEM ALLOCATES COMPUTER / SYSTEM
+  ↓
+Exam Start Time
+  ↓
+Student enters ID + Password
+  ↓
+Verification
+  ↓
+Exam Starts
+  ↓
+30 min before end → Submit button ENABLE
+  ↓
+Before that → Submit button DISABLED
+  ↓
+Time = 0
+  ↓
+AUTOMATIC SUBMIT
+  ↓
+Result
+
+
+
+
+                    ADMIN
+                      │
+              ┌───────▼────────┐
+              │   Create Exam  │
+              └───────┬────────┘
+                      │
+              ┌───────▼────────┐
+              │ Schedule Exam  │
+              └───────┬────────┘
+                      │
+          ┌───────────▼────────────┐
+          │ Student + Date + Time  │
+          └───────────┬────────────┘
+                      │
+              ┌───────▼────────┐
+              │   Attendance   │
+              └───────┬────────┘
+                      │
+              ┌───────▼────────┐
+              │ System Allocate│
+              └───────┬────────┘
+                      │
+                    STUDENT
+                      │
+              ┌───────▼────────┐
+              │ Waiting Room   │
+              └───────┬────────┘
+                      │
+                Start Time
+                      │
+              ┌───────▼────────┐
+              │ ID + Password  │
+              └───────┬────────┘
+                      │
+              ┌───────▼────────┐
+              │   EXAM START   │
+              └───────┬────────┘
+                      │
+              ┌───────▼────────┐
+              │     TIMER      │
+              └───────┬────────┘
+                      │
+           ┌──────────┴──────────┐
+           │                     │
+       30 min left             0 min
+           │                     │
+       Submit ✅              Auto Submit
+           │                     │
+           └──────────┬──────────┘
+                      │
+                ┌─────▼─────┐
+                │  RESULT   │
+                └───────────┘
+
+
+
+
+src/
+│
+├── components/
+│   ├── Sidebar.jsx
+│   ├── Header.jsx
+│   └── ProtectedRoute.jsx
+│
+├── pages/
+│   ├── Login.jsx
+│   ├── Dashboard.jsx
+│   ├── Exams.jsx
+│   ├── Attendance.jsx
+│   ├── Monitoring.jsx
+│   └── Profile.jsx
+│
+├── services/
+│   ├── axiosInstance.js
+│   ├── invigilatorApi.js
+│   ├── scheduledExamApi.js
+│   └── systemApi.js
+│
+├── context/
+│   └── AuthContext.jsx
+│
+├── App.jsx
+├── main.jsx
+└── index.css                
