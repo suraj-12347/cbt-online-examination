@@ -8,20 +8,20 @@ const axiosInstance = axios.create({
 });
 
 // Admin token automatically send hoga
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem("adminToken");
+axiosInstance.interceptors.request.use(
+  (config) => {
+  
 
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;
 
