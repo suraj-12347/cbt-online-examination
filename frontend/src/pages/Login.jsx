@@ -50,14 +50,18 @@ const Login = () => {
       // =================================================
       const loginResponse = await loginStudent(formData);
 
-      const data = loginResponse.data;
+     
 
-      // =================================================
-      // Get Student
-      // Backend returns user.id, not user._id
-      // =================================================
-      const student = data?.user;
-      const token = data?.token;
+console.log("FULL LOGIN RESPONSE:", loginResponse);
+console.log("RESPONSE DATA:", loginResponse.data);
+
+const data = loginResponse.data;
+
+const student = data?.user;
+const token = data?.token;
+
+console.log("STUDENT:", student);
+console.log("TOKEN:", token);
 
       if (!student?.id) {
         setError("Student information not found.");
