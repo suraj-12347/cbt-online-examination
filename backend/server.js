@@ -33,9 +33,9 @@ const app = express();
   
 
 const allowedOrigins = [
-   "http://localhost:5174",
+  
   "https://cbt-online-examination-1.onrender.com",
-  "http://localhost:5173",
+ 'https://online-examination-e58x.onrender.com/'
  
 ];
 
