@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:4000/api",
- 
+  // baseURL: "http://localhost:4000/api",
+ baseURL: "https://cbt-online-examination.onrender.com/api",
+  
 });
 
 axiosInstance.interceptors.request.use(
