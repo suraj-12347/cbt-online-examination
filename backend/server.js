@@ -35,7 +35,7 @@ const app = express();
 const allowedOrigins = [
   
   "https://cbt-online-examination-1.onrender.com",
- 'https://online-examination-e58x.onrender.com/'
+'https://online-examination-e58x.onrender.com'
  
 ];
 
