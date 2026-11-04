@@ -36,7 +36,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!formData.email.trim() || !formData.password) {
+    if (!formData.email || !formData.password) {
       setError("Please enter email and password.");
       return;
     }
@@ -46,13 +46,16 @@ const Login = () => {
       setError("");
 
       // =================================================
-      // Student Login - Render API
+      // Student Login
       // =================================================
-      const data = await loginStudent({
-        email: formData.email.trim(),
-        password: formData.password,
-      });
+      const loginResponse = await loginStudent(formData);
 
+      const data = loginResponse.data;
+
+      // =================================================
+      // Get Student
+      // Backend returns user.id, not user._id
+      // =================================================
       const student = data?.user;
       const token = data?.token;
 
@@ -79,7 +82,6 @@ const Login = () => {
         student.id
       );
 
-      // Axios response handling
       const scheduledData = scheduledResponse.data;
 
       console.log("Scheduled Exam Response:", scheduledData);
@@ -92,7 +94,7 @@ const Login = () => {
       // =================================================
       // No Exam Scheduled
       // =================================================
-      if (!Array.isArray(scheduledExams) || !scheduledExams.length) {
+      if (!scheduledExams.length) {
         setError("No exam has been scheduled for you.");
         return;
       }
@@ -114,14 +116,9 @@ const Login = () => {
           return false;
         }
 
-        const startTime = new Date(item.startTime);
         const endTime = new Date(item.endTime);
 
-        return (
-          !Number.isNaN(startTime.getTime()) &&
-          !Number.isNaN(endTime.getTime()) &&
-          endTime > now
-        );
+        return endTime > now;
       });
 
       // =================================================
@@ -129,14 +126,6 @@ const Login = () => {
       // =================================================
       if (!validExam) {
         setError("No active or upcoming exam found.");
-        return;
-      }
-
-      // =================================================
-      // Validate Scheduled Exam ID
-      // =================================================
-      if (!validExam._id) {
-        setError("Scheduled exam ID not found.");
         return;
       }
 
@@ -149,35 +138,32 @@ const Login = () => {
       );
 
       // =================================================
-      // Navigate To Instructions
+      // Go To Instructions
       // =================================================
       navigate(
         `/exams/${validExam._id}/instructions`,
         { replace: true }
       );
-
     } catch (error) {
       console.error("Student Login Error:", error);
 
       setError(
         error?.response?.data?.message ||
-        error?.message ||
-        "Login failed. Please try again."
+          "Login failed. Please try again."
       );
-
     } finally {
       setLoading(false);
     }
   };
 
-  // =====================================================
-  // UI
-  // =====================================================
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
       <div className="w-full max-w-md">
 
+        {/* =================================================
+            Login Card
+        ================================================= */}
         <div className="bg-white rounded-xl shadow-lg p-8">
 
           {/* Header */}
@@ -219,9 +205,7 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                autoComplete="username"
-                required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#064273] focus:ring-1 focus:ring-[#064273]"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#064273]"
                 disabled={loading}
               />
 
@@ -240,9 +224,7 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                autoComplete="current-password"
-                required
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#064273] focus:ring-1 focus:ring-[#064273]"
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:border-[#064273]"
                 disabled={loading}
               />
 
@@ -268,3 +250,4 @@ const Login = () => {
 };
 
 export default Login;
+
