@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 // =====================================================
 // START: Register User
@@ -381,3 +382,48 @@ export const updateUser = async (req, res) => {
     });
   }
 };
+
+// =====================================================
+// START: Delete User
+// =====================================================
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validate MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid student ID",
+      });
+    }
+
+    // Find and delete student
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Student not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Student deleted successfully",
+      deletedUserId: user._id,
+    });
+
+  } catch (error) {
+    console.error("Delete user error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to delete student",
+      error: error.message,
+    });
+  }
+};
+// =====================================================
+// END: Delete User
+// =====================================================

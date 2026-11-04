@@ -9,7 +9,7 @@ const createOperator = async () => {
 
     const operator = await Admin.create({
       name: "Admin",
-      email: "admin@ipsctm.com",
+      email: "admin@cbt1.com",
       password: await bcrypt.hash("admin123", 10),
       role: "admin",
       status: "active",

@@ -54,10 +54,10 @@ const ExamNavigation = ({
           ) : (
             <button
               type="button"
-              onClick={onSubmit}
+              // onClick={onSubmit}
               className="px-6 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700"
             >
-              Submit Exam
+              wait here
             </button>
           )}
         </div>

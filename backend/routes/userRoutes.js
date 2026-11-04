@@ -7,9 +7,10 @@ import {
   getAllUsers,
   getUserById,
   updateUser,
+  deleteUser,
 } from "../controllers/userController.js";
 
-import authMiddleware from "../middleware/authMiddleware.js";
+import authMiddleware from "../middleware/adminAuthMiddleware.js";
 import upload from "../middleware/uploadMiddleware.js";
 
 const router = express.Router();
@@ -76,6 +77,9 @@ router.put(
   upload.single("image"),
   updateUser
 );
+
+// Delete User
+router.delete("/:id", authMiddleware, deleteUser);
 
 
 export default router;
